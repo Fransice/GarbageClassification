@@ -367,10 +367,9 @@ cc.Class({
 
 //读取Json  获得路径和类型
 function ReadjsonData(num) {
-    let url = cc.url.raw('resources/json/data.json')
     var path;
     var type;
-    cc.loader.load(url, function (err, object) {
+    cc.loader.loadRes("Game_Data", function (err, object) {
         if (num <= 16) {
             let jsonData = object.json;
             path = jsonData[num].path;
