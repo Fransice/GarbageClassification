@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.7135641163793082,
-      "y": 0.7135641163793082,
+      "x": 0.675841980782455,
+      "y": 0.675841980782455,
       "z": 1
     },
     "_quat": {
@@ -9736,8 +9736,8 @@
     "_N$backgroundImage": {
       "__uuid__": "1ef3076b-b2ce-444c-8fd1-a7f378c74a6a"
     },
-    "_N$returnType": 4,
-    "_N$inputFlag": 4,
+    "_N$returnType": 0,
+    "_N$inputFlag": 3,
     "_N$inputMode": 6,
     "_N$fontSize": 20,
     "_N$lineHeight": 40,

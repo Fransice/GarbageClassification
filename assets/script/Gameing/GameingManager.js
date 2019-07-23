@@ -76,19 +76,25 @@ cc.Class({
     },
     //返回主界面
     backHome() {
-        var Init = this.getComponent("StartGameManager");
-        Init.Archive();
-        this.Tips_Move();
-        var data = {
-            "rightCount": this._nowscore,
-            "wrongCount": this._wrongCount,
-            "phoneNum": this._InputOut.string
-        };
-        cc.log(data);
-        this.Post(url, data, this.callBack_Data);
-        this._Success_UI.active = false;
-        this._Result_UI.active = false;
-        this._Gameing_UI.active = false;
+        var re = new RegExp("/^[0-9]+.?[0-9]*/");//判断字符串是否为数字//判断正整数/[1−9]+[0−9]∗]∗/ 
+        if (!re.test(this._InputOut.string) && this._InputOut.string.length != 11) {
+            alert("请正确输入号码");
+        } else {
+            var data = {
+                "rightCount": this._nowscore,
+                "wrongCount": this._wrongCount,
+                "phoneNum": this._InputOut.string
+            };
+            var Init = this.getComponent("StartGameManager");
+            Init.Archive();
+            this.Tips_Move();
+            cc.log(data);
+            this.Post(url, data, this.callBack_Data);
+            this._Success_UI.active = false;
+            this._Result_UI.active = false;
+            this._Gameing_UI.active = false;
+        }
+
     },
     Init() {
         this._Gameing_UI.active = true;
