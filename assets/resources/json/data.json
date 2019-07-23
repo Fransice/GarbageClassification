@@ -1,0 +1,66 @@
+[
+    {
+        "path": "Texture/pesticide",
+        "type": 1
+    },
+    {
+        "path": "Texture/cigarette",
+        "type": 2
+    },
+    {
+        "path": "Texture/bottle",
+        "type": 4
+    },
+    {
+        "path": "Texture/outdated",
+        "type": 3
+    },
+    {
+        "path": "Texture/plasticbag",
+        "type": 2
+    },
+    {
+        "path": "Texture/pill",
+        "type": 1
+    },
+    {
+        "path": "Texture/wetnapkin",
+        "type": 2
+    },
+    {
+        "path": "Texture/recharge",
+        "type": 1
+    },
+    {
+        "path": "Texture/battery",
+        "type": 2
+    },
+    {
+        "path": "Texture/hat",
+        "type": 4
+    },
+    {
+        "path": "Texture/toiletpaper",
+        "type": 2
+    },
+    {
+        "path": "Texture/plant",
+        "type": 3
+    },
+    {
+        "path": "Texture/vegetable",
+        "type": 3
+    },
+    {
+        "path": "Texture/newspapaer",
+        "type": 4
+    },
+    {
+        "path": "Texture/fluorescent",
+        "type": 1
+    },
+    {
+        "path": "Texture/sheet",
+        "type": 4
+    }
+]

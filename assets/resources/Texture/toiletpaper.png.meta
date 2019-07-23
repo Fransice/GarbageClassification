@@ -1,0 +1,31 @@
+{
+  "ver": "2.2.0",
+  "uuid": "c73472ef-550a-4f4f-aca8-54041b71ee76",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "subMetas": {
+    "toiletpaper": {
+      "ver": "1.0.3",
+      "uuid": "3a7c7068-8dbd-40da-b647-a5ae7e896926",
+      "rawTextureUuid": "c73472ef-550a-4f4f-aca8-54041b71ee76",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 94,
+      "height": 89,
+      "rawWidth": 94,
+      "rawHeight": 89,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
