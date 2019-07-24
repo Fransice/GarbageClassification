@@ -5,12 +5,15 @@ var Score = null;
 var NowNode = null;
 var url = "https://www.hyljfl.cn/addphone/upload";
 var _TopTips = null;
+var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+var random_arr = null;
 cc.Class({
     extends: cc.Component,
     properties: {
         _score: cc.Label,
         _time: cc.Label,
         _garbagname: cc.Sprite,
+        //当前时间
         _timenum: 0,
         //现在得分
         _nowscore: 0,
@@ -95,6 +98,7 @@ cc.Class({
             alert("请正确输入号码");
         }
     },
+
     Init() {
         this._Gameing_UI.active = true;
         this._Result_UI.active = false;
@@ -106,11 +110,22 @@ cc.Class({
         this._wrongCount = 0;
         this._score.string = "0/" + 10;
         this._time.node.color = cc.color(255, 175, 55);
-        this.timenum = 60;
+        this.timenum = 90;
         this._time.string = this.timenum;
         this._progressbar_time.fillRange = 1;
+        random_arr = this.shuffle(arr);
+        cc.log(random_arr);
     },
-
+    //数组随机
+    shuffle(arr) {
+        let i = arr.length;
+        let j = 0;
+        while (i) {
+            j = Math.floor(Math.random() * i--);
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    },
     //设置分数和进度条
     setscore(IsRight) {
         if (IsRight) {
@@ -135,7 +150,7 @@ cc.Class({
 
     doSomething() {
         this._time.string = --this.timenum;
-        this._progressbar_time.fillRange = this.timenum / 60;
+        this._progressbar_time.fillRange = this.timenum / 90;
         if (this.timenum <= 15) {
             this._time.node.color = cc.Color.RED;
         }
@@ -268,12 +283,12 @@ cc.Class({
     //删除节点  创建新节点
     DestoryNode() {
         cc.log(index);
-        if (index == 15) {
-            this.gamevoer();
-            this.unscheduleAllCallbacks(this);//停止某组件的所有计时器
-        } else {
-            ReadjsonData(++index);
+        if (index == 14) {
+            //重新随机
+            random_arr = this.shuffle(arr);
+            index = 0;
         }
+        ReadjsonData(++index);
     },
     //设置Tip的图片
     callBack_Data(data) {
@@ -328,12 +343,9 @@ cc.Class({
     Move(Ani) {
         var rct = this;
         var callFun = cc.callFunc(function () {
-            cc.log("运动结束");
             rct.Jelly(Ani);
             rct.DestoryNode()
-
         });
-        cc.log(Ani.height)
         var world = Ani.parent.convertToWorldSpaceAR(Ani.getPosition());
         var worldPos = cc.find("Canvas/StartGame_UI").parent.convertToNodeSpaceAR(world);
         var x1 = cc.v2(NowNode.x, NowNode.y);
@@ -371,8 +383,8 @@ function ReadjsonData(num) {
     cc.loader.loadRes("Game_Data", function (err, object) {
         if (num <= 16) {
             let jsonData = object.json;
-            path = jsonData[num].path;
-            type = jsonData[num].type;
+            path = jsonData[random_arr[num]].path;
+            type = jsonData[random_arr[num]].type;
             NowType = type;
             generate(path);
             SetName(path);

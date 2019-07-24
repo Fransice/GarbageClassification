@@ -19,6 +19,7 @@ cc.Class({
         var rc = this;
         var ac = cc.callFunc(function () {
             var Init = cc.find("Canvas").getComponent("GameingManager");
+            Init.Init();
             Init.settime();
             rc._tips_UI.active = false;
         });

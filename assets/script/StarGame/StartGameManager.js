@@ -66,10 +66,8 @@ cc.Class({
     start() {
     },
     StartGame_BtnClick() {
-        var Init = this.getComponent("GameingManager");
         this.Start_Btn.node.active = false;
         this.Tips_Btn.node.active = false;
-        Init.Init();
         this.Move_UI();
     },
     Tips_BtnClick() {
