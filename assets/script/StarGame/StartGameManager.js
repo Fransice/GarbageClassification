@@ -97,7 +97,7 @@ cc.Class({
         var trashCan_action_3 = cc.moveTo(1, 142.7, -222.7);
         var trashCan_action_4 = cc.moveTo(0.5, 442.7, -222.7);
 
-        var ground_action = cc.moveTo(1, 0, 0);
+        // var ground_action = cc.moveTo(1, 0, 0);
         this._logo.runAction(log_action);
 
         this._recyclable.runAction(trashCan_action_1);
@@ -105,7 +105,7 @@ cc.Class({
         this._hazardous.runAction(trashCan_action_3);
         this._other.runAction(trashCan_action_4);
 
-        this._ground.runAction(ground_action);
+        // this._ground.runAction(ground_action);
 
         //淡入效果
         var fadeOut = cc.fadeIn(1);
@@ -136,9 +136,9 @@ cc.Class({
 
         // 创建一个移动动作
         var log_action = cc.moveTo(1, 0, 498);
-        var ground_action = cc.moveTo(1, 0, 400);
+        // var ground_action = cc.moveTo(1, 0, 400);
         this._logo.runAction(log_action);
-        this._ground.runAction(ground_action);
+        // this._ground.runAction(ground_action);
         this._trashCan.getComponent(cc.Animation).play();
         //淡出效果
         var fadeOut = cc.fadeOut(1);
