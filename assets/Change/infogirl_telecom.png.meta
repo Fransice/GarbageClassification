@@ -1,0 +1,31 @@
+{
+  "ver": "2.2.0",
+  "uuid": "7b1e8b1a-dda4-49ad-9d58-36832daf1acb",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "subMetas": {
+    "infogirl_telecom": {
+      "ver": "1.0.3",
+      "uuid": "4c3a7603-1762-462a-8046-7d596fd666a0",
+      "rawTextureUuid": "7b1e8b1a-dda4-49ad-9d58-36832daf1acb",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -1,
+      "trimX": 0,
+      "trimY": 4,
+      "width": 454,
+      "height": 283,
+      "rawWidth": 454,
+      "rawHeight": 289,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

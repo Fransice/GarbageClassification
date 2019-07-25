@@ -3,16 +3,18 @@ var NowType = null;
 var NowNode_Txt = null;
 var Score = null;
 var NowNode = null;
-var url = "https://www.hyljfl.cn/addphone/upload";
+var url = "https://129.226.59.187/addphone/upload";
 var _TopTips = null;
 var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 var random_arr = null;
+var sc = null;
 cc.Class({
     extends: cc.Component,
     properties: {
         _score: cc.Label,
         _time: cc.Label,
         _garbagname: cc.Sprite,
+        _trashCan: cc.Node,
         //当前时间
         _timenum: 0,
         //现在得分
@@ -31,6 +33,7 @@ cc.Class({
         //其他垃圾
         _Othergarbage: cc.Node,
         _TopTips: cc.Node,
+        _TopTops_Text: cc.Label,
         //连续成功次数
         _Streak: 0,
         //手机号吗输入
@@ -49,6 +52,7 @@ cc.Class({
         _Audio: cc.AudioSource,
     },
     onLoad() {
+        sc = this;
         this._score = cc.find("Canvas/Gameing_UI/Score").getComponent(cc.Label);
         this._time = cc.find("Canvas/Gameing_UI/time").getComponent(cc.Label);
         this._name = cc.find("Canvas/Gameing_UI/bubble/name").getComponent(cc.Sprite);
@@ -72,6 +76,8 @@ cc.Class({
         this._Hazardous.getComponent(cc.Button).node.on('click', this._Harmfulgarbage_btn, this);
         this._Othergarbage.getComponent(cc.Button).node.on('click', this._Othergarbage_btn, this);
         this._TopTips = cc.find("Canvas/StartGame_UI/TopTips");
+        this._TopTops_Text = cc.find("Canvas/StartGame_UI/TopTips/Text").getComponent(cc.Label);
+        this._trashCan = cc.find("Canvas/StartGame_UI/TrashCan");
         this._Again_btn.node.on('click', this.Init, this);
         this._Again_btn.node.on('click', this.settime, this);
         this._Back_btn.node.on('click', this.backHome, this);
@@ -88,8 +94,6 @@ cc.Class({
             };
             var Init = this.getComponent("StartGameManager");
             Init.Archive();
-            this.Tips_Move();
-            cc.log(data);
             this.Post(url, data, this.callBack_Data);
             this._Success_UI.active = false;
             this._Result_UI.active = false;
@@ -114,6 +118,7 @@ cc.Class({
         this._time.string = this.timenum;
         this._progressbar_time.fillRange = 1;
         random_arr = this.shuffle(arr);
+        this._trashCan.active = true;
         cc.log(random_arr);
     },
     //数组随机
@@ -172,13 +177,7 @@ cc.Class({
         this._Gameing_UI.active = false;
         this._Success_UI.active = true;
     },
-    //tip的移动
-    Tips_Move() {
-        var Down = cc.moveTo(0.6, 0, 498);
-        var Up = cc.moveTo(0.6, 0, 680);
-        var action = cc.sequence(Down, cc.delayTime(1), Up);
-        this._TopTips.runAction(action);
-    },
+
     //可回收垃圾
     _Recyclablegarbage_btn(Ani) {
         if (NowType == 4) {
@@ -254,17 +253,12 @@ cc.Class({
                 });
                 break;
             case 3:
-                cc.loader.loadRes("Music/chest", cc.AudioClip, (err, res) => {
-                    this._Audio.clip = res;
-                    this._Audio.play();
-                });
-                break;
-            case 4:
                 cc.loader.loadRes("Music/amazing", cc.AudioClip, (err, res) => {
                     this._Audio.clip = res;
                     this._Audio.play();
                 });
                 break;
+            case 4:
             case 5:
             case 6:
             case 7:
@@ -282,7 +276,6 @@ cc.Class({
     },
     //删除节点  创建新节点
     DestoryNode() {
-        cc.log(index);
         if (index == 14) {
             //重新随机
             random_arr = this.shuffle(arr);
@@ -292,27 +285,38 @@ cc.Class({
     },
     //设置Tip的图片
     callBack_Data(data) {
-        cc.log(data);
+        sc.Tips_Move();
         switch (data.code) {
-            case "00000":
-                cc.loader.loadRes("Texture/top_1", cc.SpriteFrame, (err, res) => {
-                    _TopTips.getComponent(cc.Sprite).spriteFrame = res;
-                });
-                break;
             case "00001":
-                cc.loader.loadRes("Texture/top_2", cc.SpriteFrame, (err, res) => {
-                    _TopTips.getComponent(cc.Sprite).spriteFrame = res;
-                });
+                sc._TopTops_Text.string = "提交成功，静候流量发放";
+                break;
+            case "00000":
+                sc._TopTops_Text.string = "今日已领取，明日再来吧";
                 break;
         }
+    },
+    //tip的移动
+    Tips_Move() {
+        var Down = cc.moveTo(0.6, 0, 498);
+        var Up = cc.moveTo(0.6, 0, 680);
+        var action = cc.sequence(Down, cc.delayTime(1), Up);
+        this._TopTips.runAction(action);
     },
     //网络请求
     Post(url, reqData, callback) {
         var self = this;
         //1.拼接请求参数
         var param = "";
+        var i = 0;
         for (var item in reqData) {
-            param += item + "=" + reqData[item] + "&";
+            ++i;
+            if (i == 3) {
+                param += item + "=" + reqData[item];
+
+            }
+            else {
+                param += item + "=" + reqData[item] + "&";
+            }
         }
         //2.发起请求
         var xhr = new XMLHttpRequest();
@@ -320,7 +324,6 @@ cc.Class({
             if (xhr.readyState == 4) {
                 if (xhr.status >= 200 && xhr.status < 400) {
                     var response = xhr.responseText;
-                    // console.log(response)
                     if (response) {
                         var responseJson = JSON.parse(response);
                         callback(responseJson);
@@ -349,8 +352,8 @@ cc.Class({
         var world = Ani.parent.convertToWorldSpaceAR(Ani.getPosition());
         var worldPos = cc.find("Canvas/StartGame_UI").parent.convertToNodeSpaceAR(world);
         var x1 = cc.v2(NowNode.x, NowNode.y);
-        var x2 = cc.v2(0, worldPos.y + Ani.height + 200);
-        var x3 = cc.v2(worldPos.x, worldPos.y + Ani.height - 200);
+        var x2 = cc.v2(0, worldPos.y + Ani.height + 500);
+        var x3 = cc.v2(worldPos.x, worldPos.y + Ani.height);
         var br = cc.bezierTo(1, [x1, x2, x3]);
         var seq = cc.sequence(br, callFun);
         NowNode.runAction(seq);
@@ -365,10 +368,10 @@ cc.Class({
                 rct.unscheduleAllCallbacks(rct);//停止某组件的所有计时器
             }
         });
-        var scaleTo_1 = cc.scaleTo(0.2, 1.5, 1.7);
-        var scaleTo_2 = cc.scaleTo(0.15, 1.55, 1.35);
-        var scaleTo_3 = cc.scaleTo(0.1, 1.35, 1.65);
-        var scaleTo_4 = cc.scaleTo(0.1, 1.5, 1.5);
+        var scaleTo_1 = cc.scaleTo(0.2, 3.5, 3.7);
+        var scaleTo_2 = cc.scaleTo(0.15, 3.55, 3.35);
+        var scaleTo_3 = cc.scaleTo(0.1, 3.35, 3.65);
+        var scaleTo_4 = cc.scaleTo(0.1, 3.5, 3.5);
         var scaleTo = cc.sequence(scaleTo_1, scaleTo_2, scaleTo_3, scaleTo_4, callFun);
         Ani.runAction(scaleTo);
 
@@ -400,8 +403,8 @@ function generate(path) {
         }
         var node = new cc.Node("Rubbish");
         node.parent = cc.find("Canvas/Gameing_UI");
-        node.setPosition(0, -307);
-        node.setScale(0.8);
+        node.setPosition(0, -450);
+        node.setScale(1);
         NowNode = node;
         var sprite = node.addComponent(cc.Sprite);
         sprite.spriteFrame = res
@@ -415,8 +418,8 @@ function SetName(name) {
         }
         var node = new cc.Node(name + "_t");
         node.parent = cc.find("Canvas/Gameing_UI/Spit");
-        node.setPosition(0, 0);
-        node.setScale(1);
+        node.setPosition(0, 14);
+        node.setScale(1.5);
         NowNode_Txt = node;
         var sprite = node.addComponent(cc.Sprite);
         sprite.spriteFrame = res;
