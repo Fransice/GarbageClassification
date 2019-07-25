@@ -112,7 +112,7 @@ cc.Class({
         ReadjsonData(index);
         this._nowscore = 0;
         this._wrongCount = 0;
-        this._score.string = "0/" + 10;
+        this._score.string = "0/" + 6;
         this._time.node.color = cc.color(255, 175, 55);
         this.timenum = 90;
         this._time.string = this.timenum;
@@ -135,12 +135,12 @@ cc.Class({
     setscore(IsRight) {
         if (IsRight) {
             this._nowscore += 1;
-            this._score.string = this._nowscore + "/" + 10;
+            this._score.string = this._nowscore + "/" + 6;
 
         } else {
             if (this._nowscore >= 1) {
                 this._nowscore -= 1;
-                this._score.string = this._nowscore + "/" + 10;
+                this._score.string = this._nowscore + "/" + 6;
             }
             ++this._wrongCount;
         }
@@ -362,16 +362,16 @@ cc.Class({
     Jelly(Ani) {
         var rct = this;
         var callFun = cc.callFunc(function () {
-            if (rct._nowscore == 10) {
+            if (rct._nowscore == 6) {
                 cc.log("胜利");
                 rct.gamewin();
                 rct.unscheduleAllCallbacks(rct);//停止某组件的所有计时器
             }
         });
-        var scaleTo_1 = cc.scaleTo(0.2, 3.5, 3.7);
-        var scaleTo_2 = cc.scaleTo(0.15, 3.55, 3.35);
-        var scaleTo_3 = cc.scaleTo(0.1, 3.35, 3.65);
-        var scaleTo_4 = cc.scaleTo(0.1, 3.5, 3.5);
+        var scaleTo_1 = cc.scaleTo(0.2, 1.3, 1.4);
+        var scaleTo_2 = cc.scaleTo(0.15, 1.35, 1.25);
+        var scaleTo_3 = cc.scaleTo(0.1, 1.25, 1.35);
+        var scaleTo_4 = cc.scaleTo(0.1, 1.3, 1.3);
         var scaleTo = cc.sequence(scaleTo_1, scaleTo_2, scaleTo_3, scaleTo_4, callFun);
         Ani.runAction(scaleTo);
 

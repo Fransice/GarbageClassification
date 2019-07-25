@@ -15,7 +15,7 @@ cc.Class({
     open() {
         this._player.active = false;
         this._tips_UI.active = true;
-        var scaleTo = cc.scaleTo(0.5, 1, 1);
+        var scaleTo = cc.scaleTo(1, 1, 1);
         this._tips_UI.runAction(scaleTo);
     },
     close() {
@@ -27,7 +27,7 @@ cc.Class({
             rc._player.active = true;
             rc._tips_UI.active = false;
         });
-        var scaleTo = cc.sequence(cc.scaleTo(0.5, 0, 0), ac);
+        var scaleTo = cc.sequence(cc.scaleTo(1, 0, 0), ac);
         this._tips_UI.runAction(scaleTo);
     }
 });
