@@ -15,7 +15,7 @@ cc.Class({
     open() {
         this._player.active = false;
         this._tips_UI.active = true;
-        var scaleTo = cc.scaleTo(1, 1, 1);
+        var scaleTo = cc.scaleTo(1, 0.9, 0.9);
         this._tips_UI.runAction(scaleTo);
     },
     close() {

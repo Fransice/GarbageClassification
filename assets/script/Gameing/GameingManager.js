@@ -8,6 +8,7 @@ var _TopTips = null;
 var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 var random_arr = null;
 var sc = null;
+var NameText = null;
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -82,6 +83,7 @@ cc.Class({
         this._Again_btn.node.on('click', this.settime, this);
         this._Back_btn.node.on('click', this.backHome, this);
         _TopTips = this._TopTips;
+        NameText = cc.find("Canvas/Gameing_UI/Spit/NameText").getComponent(cc.Label);
     },
     //返回主界面
     backHome() {
@@ -112,7 +114,7 @@ cc.Class({
         ReadjsonData(index);
         this._nowscore = 0;
         this._wrongCount = 0;
-        this._score.string = "0/" + 6;
+        this._score.string = "0/" + 10;
         this._time.node.color = cc.color(255, 175, 55);
         this.timenum = 90;
         this._time.string = this.timenum;
@@ -135,12 +137,12 @@ cc.Class({
     setscore(IsRight) {
         if (IsRight) {
             this._nowscore += 1;
-            this._score.string = this._nowscore + "/" + 6;
+            this._score.string = this._nowscore + "/" + 10;
 
         } else {
             if (this._nowscore >= 1) {
                 this._nowscore -= 1;
-                this._score.string = this._nowscore + "/" + 6;
+                this._score.string = this._nowscore + "/" + 10;
             }
             ++this._wrongCount;
         }
@@ -362,7 +364,7 @@ cc.Class({
     Jelly(Ani) {
         var rct = this;
         var callFun = cc.callFunc(function () {
-            if (rct._nowscore == 6) {
+            if (rct._nowscore == 10) {
                 cc.log("胜利");
                 rct.gamewin();
                 rct.unscheduleAllCallbacks(rct);//停止某组件的所有计时器
@@ -383,14 +385,16 @@ cc.Class({
 function ReadjsonData(num) {
     var path;
     var type;
+    var name;
     cc.loader.loadRes("Game_Data", function (err, object) {
         if (num <= 16) {
             let jsonData = object.json;
             path = jsonData[random_arr[num]].path;
             type = jsonData[random_arr[num]].type;
+            name = jsonData[random_arr[num]].name;
             NowType = type;
             generate(path);
-            SetName(path);
+            SetName(name);
         }
     });
 
@@ -404,7 +408,7 @@ function generate(path) {
         var node = new cc.Node("Rubbish");
         node.parent = cc.find("Canvas/Gameing_UI");
         node.setPosition(0, -450);
-        node.setScale(1);
+        node.setScale(2);
         NowNode = node;
         var sprite = node.addComponent(cc.Sprite);
         sprite.spriteFrame = res
@@ -412,17 +416,18 @@ function generate(path) {
 }
 //设置文字
 function SetName(name) {
-    cc.loader.loadRes(name + "_t", cc.SpriteFrame, (err, res) => {
-        if (NowNode_Txt != null) {
-            NowNode_Txt.destroy();
-        }
-        var node = new cc.Node(name + "_t");
-        node.parent = cc.find("Canvas/Gameing_UI/Spit");
-        node.setPosition(0, 14);
-        node.setScale(1.5);
-        NowNode_Txt = node;
-        var sprite = node.addComponent(cc.Sprite);
-        sprite.spriteFrame = res;
-    });
+    NameText.string = name;
+    // cc.loader.loadRes(name + "_t", cc.SpriteFrame, (err, res) => {
+    //     if (NowNode_Txt != null) {
+    //         NowNode_Txt.destroy();
+    //     }
+    //     var node = new cc.Node(name + "_t");
+    //     node.parent = cc.find("Canvas/Gameing_UI/Spit");
+    //     node.setPosition(0, 14);
+    //     node.setScale(2.5);
+    //     NowNode_Txt = node;
+    //     var sprite = node.addComponent(cc.Sprite);
+    //     sprite.spriteFrame = res;
+    // });
 }
 

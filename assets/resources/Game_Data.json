@@ -1,66 +1,82 @@
 [
     {
         "path": "Texture/pesticide",
-        "type": 1
+        "type": 1,
+        "name": "杀虫剂"
     },
     {
         "path": "Texture/cigarette",
-        "type": 2
+        "type": 2,
+        "name": "抽完的烟蒂"
     },
     {
         "path": "Texture/bottle",
-        "type": 4
+        "type": 4,
+        "name": "玻璃瓶"
     },
     {
         "path": "Texture/outdated",
-        "type": 3
+        "type": 3,
+        "name": "过期食品"
     },
     {
         "path": "Texture/plasticbag",
-        "type": 2
+        "type": 2,
+        "name": "塑料袋"
     },
     {
         "path": "Texture/pill",
-        "type": 1
+        "type": 1,
+        "name": "过期药品"
     },
     {
         "path": "Texture/wetnapkin",
-        "type": 2
+        "type": 2,
+        "name": "用过的湿纸巾"
     },
     {
         "path": "Texture/recharge",
-        "type": 1
+        "type": 1,
+        "name": "可充电电池"
     },
     {
         "path": "Texture/battery",
-        "type": 2
+        "type": 2,
+        "name": "无汞电池"
     },
     {
         "path": "Texture/hat",
-        "type": 4
+        "type": 4,
+        "name": "旧帽子"
     },
     {
         "path": "Texture/toiletpaper",
-        "type": 2
+        "type": 2,
+        "name": "废卫生纸"
     },
     {
         "path": "Texture/plant",
-        "type": 3
+        "type": 3,
+        "name": "盆栽叶子"
     },
     {
         "path": "Texture/vegetable",
-        "type": 3
+        "type": 3,
+        "name": "剩菜叶"
     },
     {
         "path": "Texture/newspapaer",
-        "type": 4
+        "type": 4,
+        "name": "旧报纸"
     },
     {
         "path": "Texture/fluorescent",
-        "type": 1
+        "type": 1,
+        "name": "废荧光灯"
     },
     {
         "path": "Texture/sheet",
-        "type": 4
+        "type": 4,
+        "name": "废旧床单"
     }
 ]
