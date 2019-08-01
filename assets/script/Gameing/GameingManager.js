@@ -3,12 +3,14 @@ var NowType = null;
 var NowNode_Txt = null;
 var Score = null;
 var NowNode = null;
-var url = "https://129.226.59.187/addphone/upload";
+var url = "https://www.hyljfl.cn/addphone/upload";
 var _TopTips = null;
 var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 var random_arr = null;
 var sc = null;
 var NameText = null;
+var rightnum = null;
+var IS_Click = true;
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -90,7 +92,7 @@ cc.Class({
         var re = /^1[3456789]\d{9}$/;//判断字符串是否为数字//判断正整数/[1−9]+[0−9]∗]∗/ 
         if (re.test(this._InputOut.string)) {
             var data = {
-                "rightCount": this._nowscore,
+                "rightCount": rightnum,
                 "wrongCount": this._wrongCount,
                 "phoneNum": this._InputOut.string
             };
@@ -120,8 +122,11 @@ cc.Class({
         this._time.string = this.timenum;
         this._progressbar_time.fillRange = 1;
         random_arr = this.shuffle(arr);
+        rightnum = 0;
+        IS_Click = true;
         this._trashCan.active = true;
-        cc.log(random_arr);
+        console.log(random_arr);
+        console.log(rightnum);
     },
     //数组随机
     shuffle(arr) {
@@ -182,56 +187,65 @@ cc.Class({
 
     //可回收垃圾
     _Recyclablegarbage_btn(Ani) {
-        if (NowType == 4) {
-            ++this._Streak;
-            this.setscore(true);
-            this.Move(Ani.node);
-        } else {
-            this.setscore(false);
-            this._Streak = 0;
+        if (IS_Click) {
+            if (NowType == 4) {
+                ++this._Streak;
+                this.Move(Ani.node);
+                IS_Click = false;
+            } else {
+                this.setscore(false);
+                this._Streak = 0;
+            }
+            this.AudioPlay();
         }
-        this.AudioPlay();
     },
 
     //厨房垃圾
     _Kitchenwaste_btn(Ani) {
-        if (NowType == 3) {
-            this.setscore(true);
-            ++this._Streak;
-            this.Move(Ani.node);
-        } else {
-            this.setscore(false);
-            this._Streak = 0;
+        if (IS_Click) {
+            if (NowType == 3) {
+                ++this._Streak;
+                this.Move(Ani.node);
+                IS_Click = false;
+            } else {
+                this.setscore(false);
+                this._Streak = 0;
+            }
+            this.AudioPlay();
         }
-        this.AudioPlay();
 
     },
 
     //有害垃圾
     _Harmfulgarbage_btn(Ani) {
-        if (NowType == 1) {
-            ++this._Streak;
-            this.setscore(true);
-            this.Move(Ani.node);
-        } else {
-            this.setscore(false);
-            this._Streak = 0;
+        if (IS_Click) {
+            if (NowType == 1) {
+                ++this._Streak;
+                this.Move(Ani.node);
+                IS_Click = false;
+            } else {
+                this.setscore(false);
+                this._Streak = 0;
+            }
+            this.AudioPlay();
         }
-        this.AudioPlay();
 
     },
 
     //其他垃圾
     _Othergarbage_btn(Ani) {
-        if (NowType == 2) {
-            ++this._Streak;
-            this.setscore(true);
-            this.Move(Ani.node);
-        } else {
-            this.setscore(false);
-            this._Streak = 0;
+        if (IS_Click) {
+            if (NowType == 2) {
+                ++this._Streak;
+                this.Move(Ani.node);
+                IS_Click = false;
+
+            } else {
+                this.setscore(false);
+                this._Streak = 0;
+            }
+            this.AudioPlay();
         }
-        this.AudioPlay();
 
     },
     AudioPlay() {
@@ -346,9 +360,12 @@ cc.Class({
 
     //移动
     Move(Ani) {
+        console.log(rightnum);
         var rct = this;
         var callFun = cc.callFunc(function () {
+            ++rightnum;
             rct.Jelly(Ani);
+            rct.setscore(true);
             rct.DestoryNode()
         });
         var world = Ani.parent.convertToWorldSpaceAR(Ani.getPosition());
@@ -359,6 +376,8 @@ cc.Class({
         var br = cc.bezierTo(1, [x1, x2, x3]);
         var seq = cc.sequence(br, callFun);
         NowNode.runAction(seq);
+        var scaleTo_1 = cc.scaleTo(1, 0.8, 0.8);
+        NowNode.runAction(scaleTo_1);
 
     },
     Jelly(Ani) {
@@ -369,6 +388,7 @@ cc.Class({
                 rct.gamewin();
                 rct.unscheduleAllCallbacks(rct);//停止某组件的所有计时器
             }
+            IS_Click = true;
         });
         var scaleTo_1 = cc.scaleTo(0.2, 1.3, 1.4);
         var scaleTo_2 = cc.scaleTo(0.15, 1.35, 1.25);
@@ -417,17 +437,5 @@ function generate(path) {
 //设置文字
 function SetName(name) {
     NameText.string = name;
-    // cc.loader.loadRes(name + "_t", cc.SpriteFrame, (err, res) => {
-    //     if (NowNode_Txt != null) {
-    //         NowNode_Txt.destroy();
-    //     }
-    //     var node = new cc.Node(name + "_t");
-    //     node.parent = cc.find("Canvas/Gameing_UI/Spit");
-    //     node.setPosition(0, 14);
-    //     node.setScale(2.5);
-    //     NowNode_Txt = node;
-    //     var sprite = node.addComponent(cc.Sprite);
-    //     sprite.spriteFrame = res;
-    // });
 }
 
